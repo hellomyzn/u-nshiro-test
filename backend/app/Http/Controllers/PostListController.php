@@ -8,7 +8,12 @@ use App\Models\Post;
 class PostListController extends Controller
 {
     public function index(){
-        $posts = Post::withCount('comments')->get();
+        $posts = Post::query()
+            ->with('user')
+            ->withCount('comments')
+            ->orderByDesc('comments_count')
+            ->get();
+
         return view('post_lists.index', compact('posts'));
     }
 }

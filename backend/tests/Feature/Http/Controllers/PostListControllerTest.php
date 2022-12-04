@@ -34,6 +34,7 @@ class PostListControllerTest extends TestCase
         $user = User::factory()->create();
         $post1 = Post::factory()->hasComments(3)->create(['user_id' => $user->id]);
         $post2 = Post::factory()->hasComments(5)->create(['user_id' => $user->id]);
+        Post::factory()->hasComments(1)->create(['user_id' => $user->id]);
         $response = $this->get('/post-lists');
 
         $response->assertStatus(200)
@@ -41,7 +42,12 @@ class PostListControllerTest extends TestCase
             ->assertSee($post2->title)
             ->assertSee($post1->user->name)
             ->assertSee('3 comments')
-            ->assertSee('5 comments');
+            ->assertSee('5 comments')
+            ->assertSeeInOrder([
+                '5 comments',
+                '3 comments',
+                '1 comments',
+            ]);
         
     }
 }
