@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 use App\Models\Post;
+use App\Models\User;
 
 class PostListControllerTest extends TestCase
 {
@@ -30,8 +31,9 @@ class PostListControllerTest extends TestCase
      * @test
      */
     public function post_article(){
-        $post1 = Post::factory()->create();
-        $post2 = Post::factory()->create();
+        $user = User::factory()->create();
+        $post1 = Post::factory()->create(['user_id' => $user->id]);
+        $post2 = Post::factory()->create(['user_id' => $user->id]);
         $response = $this->get('/post-lists');
 
         $response->assertStatus(200)
