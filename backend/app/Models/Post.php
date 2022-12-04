@@ -11,6 +11,11 @@ class Post extends Model
 {
     use HasFactory;
 
+    const STATUS = [
+        'close' => 0,
+        'open' => 1, 
+    ];
+
     public function user(){
         return $this->belongsTo(User::class);
     }

@@ -19,7 +19,8 @@ class PostListControllerTest extends TestCase
      * @return void
      * @test
      */
-    public function index_page(){
+    public function index_page()
+    {
         $response = $this->get('/post-lists');
         $response->assertStatus(200);
     }
@@ -30,7 +31,8 @@ class PostListControllerTest extends TestCase
      * @return void
      * @test
      */
-    public function post_article(){
+    public function post_article()
+    {
         $user = User::factory()->create();
         $post1 = Post::factory()->hasComments(3)->create(['user_id' => $user->id]);
         $post2 = Post::factory()->hasComments(5)->create(['user_id' => $user->id]);

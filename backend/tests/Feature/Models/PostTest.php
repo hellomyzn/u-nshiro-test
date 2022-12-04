@@ -20,7 +20,8 @@ class PostTest extends TestCase
      * @return void
      * @test
      */
-    public function respond_user_relation(){
+    public function respond_user_relation()
+    {
         // $this->seed();
         $user = User::factory()->create();
         $post = Post::factory()->create(['user_id' => $user->id]);
@@ -34,7 +35,8 @@ class PostTest extends TestCase
      * @return void
      * @test
      */
-    public function respond_comments_relation(){
+    public function respond_comments_relation()
+    {
         $user = User::factory()->create();
         $post = Post::factory()->create(['user_id' => $user->id]);
         Comment::factory(3)->create(['post_id' => $post->id]);
