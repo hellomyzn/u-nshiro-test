@@ -17,8 +17,9 @@ class PostFactory extends Factory
      */
     public function definition()
     {
+        
         return [
-            'user_id' => User::factory(),
+            'user_id' => random_int(0, count(User::all())),
             'title' => $this->faker->realText(20),
             'body' => $this->faker->realText(200),
         ];

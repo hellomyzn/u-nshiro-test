@@ -1,6 +1,7 @@
 <x-guest-layout>
     @foreach ($posts as $post)
-        <p>{{ $post->title }}</p>
-        <p>{{ $post->body }}</p>
+        <p>Title: {{ $post->title }}</p>
+        <p>Author: {{ $post->user->name }}</p>
+        <br>
     @endforeach
 </x-guest-layout>

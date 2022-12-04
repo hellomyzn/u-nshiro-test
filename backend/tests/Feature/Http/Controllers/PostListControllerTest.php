@@ -36,7 +36,8 @@ class PostListControllerTest extends TestCase
 
         $response->assertStatus(200)
             ->assertSee($post1->title)
-            ->assertSee($post2->title);
+            ->assertSee($post2->title)
+            ->assertSee($post1->user->name);
         
     }
 }
