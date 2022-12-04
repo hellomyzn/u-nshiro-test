@@ -4,9 +4,11 @@ namespace Tests\Feature;
 
 // use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use App\Models\User;
 
 class ExampleTest extends TestCase
 {
+    // use RefreshDatabase;
     /**
      * A basic test example.
      *
@@ -18,18 +20,4 @@ class ExampleTest extends TestCase
 
         $response->assertStatus(200);
     }
-
-    
-    
-    
-    // /**
-    //  * hoge
-    //  *
-    //  * @return void
-    //  * @test
-    //  */
-    // public function hoge()
-    // {
-
-    // }
 }
