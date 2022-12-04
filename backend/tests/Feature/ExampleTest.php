@@ -18,4 +18,18 @@ class ExampleTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    
+    
+    
+    // /**
+    //  * hoge
+    //  *
+    //  * @return void
+    //  * @test
+    //  */
+    // public function hoge()
+    // {
+
+    // }
 }

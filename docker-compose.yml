@@ -40,6 +40,17 @@ services:
     volumes:
       - db-store:/var/lib/mysql
 
+  db-testing:
+    container_name: db-test
+    build: ./infra/mysql
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+      MYSQL_ROOT_PASSWORD: ${DB_PASS}
+    ports:
+      - 33061:3306
+
   phpmyadmin:
     container_name: phpmyadmin
     image: phpmyadmin/phpmyadmin:latest
