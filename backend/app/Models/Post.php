@@ -11,9 +11,12 @@ class Post extends Model
 {
     use HasFactory;
 
+    const OPEN = 1;
+    const CLOSE = 0;
+
     const STATUS = [
-        'close' => 0,
-        'open' => 1, 
+        self::OPEN => 'Open', 
+        self::CLOSE => 'Close',
     ];
 
     public function user(){
@@ -26,6 +29,11 @@ class Post extends Model
 
     public function scopeOnlyOpen($query)
     {
-        return $query->where('status',self::STATUS['open']);
+        return $query->where('status',self::OPEN);
+    }
+
+    public function isClosed()
+    {
+        return $this->status == self::CLOSE;
     }
 }

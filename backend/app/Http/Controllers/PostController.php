@@ -21,9 +21,9 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        if ($post->status == false)
+        if ($post->isClosed())
         {
-            return to_route('posts.index');
+            abort(403);
         }
         return view('posts.show', compact('post'));
     }

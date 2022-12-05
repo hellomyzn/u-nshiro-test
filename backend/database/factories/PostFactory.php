@@ -22,7 +22,7 @@ class PostFactory extends Factory
         
         return [
             'user_id' => User::factory(),
-            'status' => Post::STATUS['open'],
+            'status' => Post::OPEN,
             'title' => $this->faker->realText(20),
             'body' => $this->faker->realText(200),
         ];
@@ -33,11 +33,11 @@ class PostFactory extends Factory
         return $this->state(function(array $attributes) {
             return [
                 'status' => fake()->randomElement([
-                    Post::STATUS['open'],
-                    Post::STATUS['open'],
-                    Post::STATUS['open'],
-                    Post::STATUS['open'],
-                    Post::STATUS['close'],
+                    Post::OPEN,
+                    Post::OPEN,
+                    Post::OPEN,
+                    Post::OPEN,
+                    Post::CLOSE,
                 ])
             ];
         });
@@ -47,7 +47,7 @@ class PostFactory extends Factory
     {
         return $this->state(function(array $attributes) {
             return [
-                'status' => Post::STATUS['close'],
+                'status' => Post::CLOSE,
             ];
         });
     }

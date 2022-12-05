@@ -49,7 +49,8 @@ class PostTest extends TestCase
      * @return void
      * @test
      */
-    public function scopeOnlyOpen(){
+    public function scopeOnlyOpen()
+    {
         $post_closed = Post::factory()->closed()->create();
         $post_opened = Post::factory()->create();
 
@@ -57,5 +58,20 @@ class PostTest extends TestCase
 
         $this->assertFalse($posts->contains($post_closed));
         $this->assertTrue($posts->contains($post_opened));
+    }
+
+    /**
+     * isClosed
+     *
+     * @return void
+     * @test
+     */
+    public function isClosed()
+    {
+        $post_closed = Post::factory()->closed()->make();
+        $post_opened = Post::factory()->make();
+
+        $this->assertTrue($post_closed->isClosed());
+        $this->assertFalse($post_opened->isClosed());
     }
 }

@@ -103,6 +103,6 @@ class PostControllerTest extends TestCase
 
         $response = $this->get('posts/'.$post->id);
         
-        $response->assertStatus(302);
+        $response->assertStatus(403);
     }
 }
