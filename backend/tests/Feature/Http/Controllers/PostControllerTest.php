@@ -5,6 +5,7 @@ namespace Tests\Feature\Http\Controllers;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Carbon\Carbon;
 
 use App\Models\Post;
 use App\Models\User;
@@ -104,5 +105,35 @@ class PostControllerTest extends TestCase
         $response = $this->get('posts/'.$post->id);
         
         $response->assertStatus(403);
+    }
+    
+    /**
+     * only_show_merry_christmas_if_its_1225
+     *
+     * @return void
+     * @test
+     */
+    public function show_merry_christmas_if_its_1225(){
+        Carbon::setTestNow('2020-12-25');
+
+        $response = $this->get('/posts');
+
+        $response->assertStatus(200)
+            ->assertSee('merry christmas');
+    }
+
+    /**
+     * only_show_merry_christmas_if_its_1225
+     *
+     * @return void
+     * @test
+     */
+    public function not_show_merry_christmas_if_its_except_1225(){
+        Carbon::setTestNow('2020-12-24');
+
+        $response = $this->get('/posts');
+
+        $response->assertStatus(200)
+            ->assertDontSee('merry christmas');
     }
 }

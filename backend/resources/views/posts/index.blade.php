@@ -1,4 +1,8 @@
 <x-guest-layout>
+    @if (today()->is('12-25'))
+        <h1>merry christmas</h1>
+    @endif
+    
     @foreach ($posts as $post)
         <a href={{ route('posts.show', $post)}}>
             <p>Title: {{ $post->title }}</p>
