@@ -1,6 +1,6 @@
 <x-guest-layout>
     @foreach ($posts as $post)
-        <a href={{ route('posts.show', ['id' => $post->id])}}>
+        <a href={{ route('posts.show', $post)}}>
             <p>Title: {{ $post->title }}</p>
         </a>
         <p>Author: {{ $post->user->name }}</p>

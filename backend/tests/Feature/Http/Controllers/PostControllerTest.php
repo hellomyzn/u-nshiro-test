@@ -84,7 +84,7 @@ class PostControllerTest extends TestCase
     {
         $post = Post::factory()->create();
 
-        $response = $this->get('posts'.$post->id);
+        $response = $this->get('posts/'.$post->id);
 
         $response->assertStatus(200)
             ->assertSee($post->title)
@@ -99,6 +99,10 @@ class PostControllerTest extends TestCase
      */
     public function can_not_access_closed_article_page()
     {
+        $post = Post::factory()->closed()->create();
+
+        $response = $this->get('posts/'.$post->id);
         
+        $response->assertStatus(302);
     }
 }
