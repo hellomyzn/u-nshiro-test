@@ -73,4 +73,32 @@ class PostControllerTest extends TestCase
             ->assertDontSee('This is closed')
             ->assertSee('This is opened');
     }
+    
+    /**
+     * show_page
+     *
+     * @return void
+     * @test
+     */
+    public function show_page()
+    {
+        $post = Post::factory()->create();
+
+        $response = $this->get('posts'.$post->id);
+
+        $response->assertStatus(200)
+            ->assertSee($post->title)
+            ->assertSee($post->user->name);
+    }
+    
+    /**
+     * can_not_access_closed_article_page
+     *
+     * @return void
+     * @test
+     */
+    public function can_not_access_closed_article_page()
+    {
+        
+    }
 }

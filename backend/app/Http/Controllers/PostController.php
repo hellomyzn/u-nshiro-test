@@ -7,7 +7,8 @@ use App\Models\Post;
 
 class PostController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $posts = Post::query()
             ->onlyOpen()
             ->with('user')
@@ -16,5 +17,11 @@ class PostController extends Controller
             ->get();
 
         return view('posts.index', compact('posts'));
+    }
+
+    public function show($id)
+    {
+        $post = Post::findOrFail($id);
+        return view('posts.show', compact('post'));
     }
 }
