@@ -9,6 +9,7 @@ use Carbon\Carbon;
 
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Comment;
 
 class PostControllerTest extends TestCase
 {
@@ -123,7 +124,7 @@ class PostControllerTest extends TestCase
     }
 
     /**
-     * only_show_merry_christmas_if_its_1225
+     * not_show_merry_christmas_if_its_except_1225
      *
      * @return void
      * @test
@@ -135,5 +136,46 @@ class PostControllerTest extends TestCase
 
         $response->assertStatus(200)
             ->assertDontSee('merry christmas');
+    }
+    
+    /**
+     * show_comments_ordered_by_the_oldest
+     *
+     * @return void
+     * @test
+     */
+    public function show_comments_ordered_by_the_oldest(){
+        $post = Post::factory()->create();
+        $first_comment = Comment::factory()->create([
+            'created_at' => now()->subDays(2),
+            'name' => 'first',
+            'post_id' => $post->id,
+        ]);
+
+        $secound_comment = Comment::factory()->create([
+            'created_at' => now(),
+            'name' => 'secound',
+            'post_id' => $post->id,
+        ]);
+
+        $third_comment = Comment::factory()->create([
+            'created_at' => now()->addDays(2),
+            'name' => 'third',
+            'post_id' => $post->id,
+        ]);
+
+
+        $response = $this->get('posts/'.$post->id);
+
+        $response->assertStatus(200)
+            ->assertSee($post->title)
+            ->assertSee($post->user->name)
+            ->assertSee($secound_comment->name)
+            ->assertSee($secound_comment->body)
+            ->assertSeeInOrder([
+                'first',
+                'secound',
+                'third',
+            ]);
     }
 }
