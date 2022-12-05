@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 
-class PostListController extends Controller
+class PostController extends Controller
 {
     public function index(){
         $posts = Post::query()
@@ -15,6 +15,6 @@ class PostListController extends Controller
             ->orderByDesc('comments_count')
             ->get();
 
-        return view('post_lists.index', compact('posts'));
+        return view('posts.index', compact('posts'));
     }
 }

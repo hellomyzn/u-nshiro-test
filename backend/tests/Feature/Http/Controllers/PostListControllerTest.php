@@ -21,7 +21,7 @@ class PostListControllerTest extends TestCase
      */
     public function index_page()
     {
-        $response = $this->get('/post-lists');
+        $response = $this->get('/posts');
         $response->assertStatus(200);
     }
     
@@ -36,7 +36,7 @@ class PostListControllerTest extends TestCase
         $post1 = Post::factory()->hasComments(3)->create();
         $post2 = Post::factory()->hasComments(5)->create();
         Post::factory()->hasComments(1)->create();
-        $response = $this->get('/post-lists');
+        $response = $this->get('/posts');
 
         $response->assertStatus(200)
             ->assertSee($post1->title)
@@ -67,7 +67,7 @@ class PostListControllerTest extends TestCase
             'title' => 'This is opened',
         ]);
         
-        $response = $this->get('/post-lists');
+        $response = $this->get('/posts');
         
         $response->assertStatus(200)
             ->assertDontSee('This is closed')
