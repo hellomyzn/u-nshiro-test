@@ -27,12 +27,9 @@ class AuthenticationTest extends TestCase
             'email' => $user->email,
             'password' => 'password',
         ]);
-        
+
         $this->assertAuthenticated();
-        $this->assertDatabaseHas(User::class, [
-            'name' => $user->name,
-            'email' => $user->email,
-        ]);
+        $this->assertDatabaseHas(User::class, $user->get(['name', 'email'])[0]->toArray());
         $response->assertRedirect(RouteServiceProvider::HOME);
     }
 
@@ -41,7 +38,7 @@ class AuthenticationTest extends TestCase
         $user = User::factory()->create([
             'password' => Hash::make('password'),
         ]);
-        
+
         $this->assertTrue(Hash::check('password', $user->password));
     }
 
