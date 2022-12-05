@@ -23,8 +23,7 @@ class PostTest extends TestCase
     public function respond_user_relation()
     {
         // $this->seed();
-        $user = User::factory()->create();
-        $post = Post::factory()->create(['user_id' => $user->id]);
+        $post = Post::factory()->create();
 
         $this->assertInstanceOf(User::class, $post->user);
     }
@@ -37,11 +36,26 @@ class PostTest extends TestCase
      */
     public function respond_comments_relation()
     {
-        $user = User::factory()->create();
-        $post = Post::factory()->create(['user_id' => $user->id]);
-        Comment::factory(3)->create(['post_id' => $post->id]);
+        $post = Post::factory()->hasComments(3)->create();
 
         $this->assertInstanceOf(Collection::class, $post->comments);
         $this->assertInstanceOf(Comment::class, $post->comments[0]);
+    }
+
+        
+    /**
+     * scopeOnlyOpen
+     *
+     * @return void
+     * @test
+     */
+    public function scopeOnlyOpen(){
+        $post_closed = Post::factory()->closed()->create();
+        $post_opened = Post::factory()->create();
+
+        $posts = Post::onlyOpen()->get();
+
+        $this->assertFalse($posts->contains($post_closed));
+        $this->assertTrue($posts->contains($post_opened));
     }
 }

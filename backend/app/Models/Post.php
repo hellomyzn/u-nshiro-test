@@ -23,4 +23,9 @@ class Post extends Model
     public function comments(){
         return $this->hasMany(Comment::class);
     }
+
+    public function scopeOnlyOpen($query)
+    {
+        return $query->where('status',self::STATUS['open']);
+    }
 }

@@ -33,10 +33,9 @@ class PostListControllerTest extends TestCase
      */
     public function post_article()
     {
-        $user = User::factory()->create();
-        $post1 = Post::factory()->hasComments(3)->create(['user_id' => $user->id]);
-        $post2 = Post::factory()->hasComments(5)->create(['user_id' => $user->id]);
-        Post::factory()->hasComments(1)->create(['user_id' => $user->id]);
+        $post1 = Post::factory()->hasComments(3)->create();
+        $post2 = Post::factory()->hasComments(5)->create();
+        Post::factory()->hasComments(1)->create();
         $response = $this->get('/post-lists');
 
         $response->assertStatus(200)
@@ -51,5 +50,27 @@ class PostListControllerTest extends TestCase
                 '1 comments',
             ]);
         
+    }
+    
+    /**
+     * show_only_opened_posts
+     *
+     * @return void
+     * @test
+     */
+    public function show_only_opened_posts()
+    {
+        $post_closed = Post::factory()->closed()->create([
+            'title' => 'This is closed',
+        ]);
+        $post_opened = Post::factory()->create([
+            'title' => 'This is opened',
+        ]);
+        
+        $response = $this->get('/post-lists');
+        
+        $response->assertStatus(200)
+            ->assertDontSee('This is closed')
+            ->assertSee('This is opened');
     }
 }

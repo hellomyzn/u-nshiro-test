@@ -21,7 +21,7 @@ class PostFactory extends Factory
     {
         
         return [
-            'user_id' => random_int(0, count(User::all())),
+            'user_id' => User::factory(),
             'status' => Post::STATUS['open'],
             'title' => $this->faker->realText(20),
             'body' => $this->faker->realText(200),
@@ -39,6 +39,15 @@ class PostFactory extends Factory
                     Post::STATUS['open'],
                     Post::STATUS['close'],
                 ])
+            ];
+        });
+    }
+
+    public function closed()
+    {
+        return $this->state(function(array $attributes) {
+            return [
+                'status' => Post::STATUS['close'],
             ];
         });
     }
