@@ -9,7 +9,7 @@ use Tests\TestCase;
 use App\Models\Post;
 use App\Models\User;
 
-class PostListControllerTest extends TestCase
+class PostControllerTest extends TestCase
 {
     use RefreshDatabase;
         
