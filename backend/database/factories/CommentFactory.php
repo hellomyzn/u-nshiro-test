@@ -22,6 +22,7 @@ class CommentFactory extends Factory
             'post_id' => Post::factory(),
             'name' => fake()->name(),
             'body' => fake()->realText(20),
+            'created_at' => fake()->dateTimeBetween('-30days', '-1days'),
         ];
     }
 }

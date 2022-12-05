@@ -26,6 +26,7 @@ class PostController extends Controller
             abort(403);
         }
         $comments = $post->comments()->oldest()->get();
+        
         return view('posts.show', compact(['post', 'comments']));
     }
 }
