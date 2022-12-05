@@ -5,6 +5,7 @@ namespace Tests\Feature\Auth;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class AuthenticationTest extends TestCase
@@ -33,6 +34,15 @@ class AuthenticationTest extends TestCase
             'email' => $user->email,
         ]);
         $response->assertRedirect(RouteServiceProvider::HOME);
+    }
+
+    public function test_password_is_hashed()
+    {
+        $user = User::factory()->create([
+            'password' => Hash::make('password'),
+        ]);
+        
+        $this->assertTrue(Hash::check('password', $user->password));
     }
 
     public function test_users_can_not_authenticate_with_invalid_password()
