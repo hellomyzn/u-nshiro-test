@@ -146,15 +146,16 @@ class PostControllerTest extends TestCase
      */
     public function show_comments_ordered_by_the_oldest(){
         $post = Post::factory()->create();
-        $first_comment = Comment::factory()->create([
-            'created_at' => now()->subDays(2),
-            'name' => 'first',
-            'post_id' => $post->id,
-        ]);
 
         $secound_comment = Comment::factory()->create([
             'created_at' => now(),
             'name' => 'secound',
+            'post_id' => $post->id,
+        ]);
+
+        $first_comment = Comment::factory()->create([
+            'created_at' => now()->subDays(2),
+            'name' => 'first',
             'post_id' => $post->id,
         ]);
 

@@ -5,7 +5,7 @@
 <br>
 
 <h3>Comments</h3>
-@foreach ($post->comments as $comment)
+@foreach ($comments as $comment)
     <p>Name: {{ $comment->name }}</p>
     <p>Body: {{ $comment->body }}</p>
     <br>
