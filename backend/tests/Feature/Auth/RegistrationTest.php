@@ -6,6 +6,8 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
+use App\Models\User;
+
 class RegistrationTest extends TestCase
 {
     use RefreshDatabase;
@@ -47,7 +49,7 @@ class RegistrationTest extends TestCase
     }
 
     /**
-     * can_not_register_with_wrong_user_data
+     * name_validation
      *
      * @return void
      * @test
@@ -58,5 +60,36 @@ class RegistrationTest extends TestCase
         $response->assertInvalid(['name' => 'The name must not be greater than 255 characters.']);
         $response = $this->post('/register', ['name' => str_repeat('a', 255)]);
         $response->assertValid('name');
+    }
+
+    /**
+     * email_validation
+     *
+     * @return void
+     * @test
+     */
+    public function email_validation()
+    {
+        User::factory()->create(['email' => 'test@example.com']);
+        $response_proper_email = $this->post('/register', ['email' => 'hoge']);
+        $response_proper_email->assertInvalid(['email' => 'The email must be a valid email address.']);
+
+        $response_unique = $this->post('/register', ['email' => 'test@example.com']);
+        $response_unique->assertInvalid(['email' => 'The email has already been taken.']);
+        
+    }
+
+    /**
+     * password_validation
+     *
+     * @return void
+     * @test
+     */
+    public function password_validation()
+    {
+        $response = $this->post('/register', ['password' => '1234567']);
+        $response->assertInvalid(['password' => 'The password must be at least 8 characters.']);
+        
+        
     }
 }
