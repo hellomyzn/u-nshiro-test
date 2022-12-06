@@ -52,9 +52,11 @@ class RegistrationTest extends TestCase
      * @return void
      * @test
      */
-    public function name_is_long()
+    public function name_validation()
     {
         $response = $this->post('/register', ['name' => str_repeat('a', 256)]);
         $response->assertInvalid(['name' => 'The name must not be greater than 255 characters.']);
+        $response = $this->post('/register', ['name' => str_repeat('a', 255)]);
+        $response->assertValid('name');
     }
 }
