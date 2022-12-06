@@ -29,4 +29,32 @@ class RegistrationTest extends TestCase
         $this->assertAuthenticated();
         $response->assertRedirect(RouteServiceProvider::HOME);
     }
+    
+    /**
+     * can_not_register_with_wrong_user_data
+     *
+     * @return void
+     * @test
+     */
+    public function can_not_register_with_empty_data()
+    {
+        $response = $this->post('/register', []);
+        $response->assertInvalid([
+            'name' => 'The name field is required.',
+            'email' => 'The email field is required.',
+            'password' => 'The password field is required.',
+        ]);
+    }
+
+    /**
+     * can_not_register_with_wrong_user_data
+     *
+     * @return void
+     * @test
+     */
+    public function name_is_long()
+    {
+        $response = $this->post('/register', ['name' => str_repeat('a', 256)]);
+        $response->assertInvalid(['name' => 'The name must not be greater than 255 characters.']);
+    }
 }
